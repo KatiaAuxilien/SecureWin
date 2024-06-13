@@ -1,11 +1,11 @@
-package com.projetenchere.Bidder.View;
+package com.projetenchere.bidder.view;
 
-import com.projetenchere.Bidder.Model.Bidder;
-import com.projetenchere.common.Models.CurrentBids;
-import com.projetenchere.common.Models.Offer;
-import com.projetenchere.common.View.I_UserInterface;
+import com.projetenchere.bidder.model.Bidder;
+import com.projetenchere.common.model.CurrentBids;
+import com.projetenchere.common.model.Offer;
+import com.projetenchere.common.view.IUserInterface;
 
-public interface IBidderUserInterface extends I_UserInterface {
+public interface IBidderUserInterface extends IUserInterface {
     void displayBid(CurrentBids currentBids);
 
     Offer readOffer(Bidder bidder, CurrentBids currentBids);
@@ -27,5 +27,8 @@ public interface IBidderUserInterface extends I_UserInterface {
     void displayHello();
 
     void tellReceiptOfCurrentBids();
+
+    void tellFalsifiedSignatureManager();
+    void tellFalsifiedSignatureSeller();
 
 }

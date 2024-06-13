@@ -1,8 +1,8 @@
-package com.projetenchere.Seller.View.graphicalUserInterface;
+package com.projetenchere.seller.view.graphicalUserInterface;
 
-import com.projetenchere.Seller.View.ISellerUserInterface;
-import com.projetenchere.common.Models.Bid;
-import com.projetenchere.common.View.UserGraphicalUserInterface;
+import com.projetenchere.common.model.Bid;
+import com.projetenchere.common.view.UserGraphicalUserInterface;
+import com.projetenchere.seller.view.ISellerUserInterface;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -54,10 +54,10 @@ public class SellerGraphicalUserInterface extends UserGraphicalUserInterface imp
         }
         LocalDate currentDate = LocalDate.now();
         endDatePicker.setValue(currentDate);
-        LocalTime now = LocalTime.now();
+        LocalTime now = LocalTime.now().plusSeconds(30);//.plusMinutes(1);//.plusSeconds(30);
         hourComboBox.getSelectionModel().select(Integer.valueOf(now.getHour()));
-        minuteComboBox.getSelectionModel().select(Integer.valueOf((now.getMinute() + 1) % 60));
-        secondComboBox.getSelectionModel().select(Integer.valueOf((now.getSecond() + 30) % 60));
+        minuteComboBox.getSelectionModel().select(Integer.valueOf(now.getMinute()));
+        secondComboBox.getSelectionModel().select(Integer.valueOf(now.getSecond()));
     }
 
     @FXML
@@ -125,7 +125,7 @@ public class SellerGraphicalUserInterface extends UserGraphicalUserInterface imp
 
     @Override
     public void tellSignatureConfigGeneration() {
-        addLogMessage("Génération de la configuration de la signature ...");
+        addLogMessage("Génération de la configuration de la signature...");
     }
 
     @Override
@@ -135,7 +135,7 @@ public class SellerGraphicalUserInterface extends UserGraphicalUserInterface imp
 
     @Override
     public void displayEncryptedOffersSet() {
-
+        addLogMessage("Prix chiffrés envoyés à l'autorité de gestion pour traitement...");
     }
 
     @Override
@@ -171,4 +171,84 @@ public class SellerGraphicalUserInterface extends UserGraphicalUserInterface imp
         addLogMessage("Envoie de l'enchère au gestionnaire...");
     }
 
+
+    @Override
+    public void tellWaitForParticipation(){
+        addLogMessage("Attente de participants.");
+    }
+
+    @Override
+    public synchronized void tellNewParticipant(){
+        addLogMessage("Nouvelle participation !");
+    }
+
+    @Override
+    public synchronized void tellParticipationRejected(){
+        addLogMessage("Une participation a été rejetée.");
+    }
+
+    @Override
+    public void tellEndOfParticipation(){
+        addLogMessage("Fin de la participation.");
+    }
+
+    @Override
+    public void tellSendBiddersVerification(){
+        addLogMessage("Envoie de la vérification auprès des enchérisseurs.");
+    }
+
+    @Override
+    public void displayEndBid(String idBid){
+        addLogMessage("L'enchère " + idBid + " est terminée.");
+    }
+
+    @Override
+    public void tellSendResolutionToManager(){
+        addLogMessage("Envoie de la demande de résolution au gestionnaire.");
+    }
+
+    @Override
+    public void tellFalsifiedSignatureManager()
+    {
+        addLogMessage("Signature du gestionnaire usurpée ! Enchères compromises !");
+    }
+
+    @Override
+    public void tellFalsifiedSignatureBidder() {
+        addLogMessage("Signature de l'enchérisseur usurpée !");
+    }
+
+    @Override
+    public void tellWaitWinnerManifestation(){
+        addLogMessage("Attente qu'un gagnant se manifeste !");
+    }
+
+    @Override
+    public void tellWinnerBid(double prix){
+        addLogMessage("Le prix gagnant est " +prix+ "€");
+    }
+
+    @Override
+    public void tellResultsSend(){
+        addLogMessage("Résultats envoyés aux enchérisseurs.");
+    }
+
+
+    @Override
+    public void showNewOfferAlert(){addLogMessage("Nouvelle offre reçue !");}
+
+    @Override
+    public void tellBidEnd() {
+        addLogMessage("Enchère finie !");
+    }
+
+    @Override
+    public void tellSendOffersToManager() {
+        addLogMessage("Envoie de la demande de résolution au gestionnaire.");
+    }
+
+    @Override
+    public void displayWinnerPrice(double price) {
+        addLogMessage("Le prix gagnant est " + price + "€");
+    }
 }

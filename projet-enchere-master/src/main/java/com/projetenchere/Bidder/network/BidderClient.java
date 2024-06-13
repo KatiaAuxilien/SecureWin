@@ -1,18 +1,15 @@
-package com.projetenchere.Bidder.network;
+package com.projetenchere.bidder.network;
 
-import com.projetenchere.common.Models.CurrentBids;
-import com.projetenchere.common.Models.Encrypted.EncryptedOffer;
-import com.projetenchere.common.Models.Encrypted.SignedEncryptedOfferSet;
-import com.projetenchere.common.Models.Encrypted.SignedPublicKey;
-import com.projetenchere.common.Models.WinStatus;
-import com.projetenchere.common.Utils.NetworkUtil;
+import com.projetenchere.common.model.EndPack;
+import com.projetenchere.common.model.PlayerStatus;
+import com.projetenchere.common.model.signedPack.*;
 import com.projetenchere.common.network.Client;
 import com.projetenchere.common.network.ClientSocketWrapper;
 import com.projetenchere.common.network.Headers;
 import com.projetenchere.common.network.socket.SSLSocketFactory;
+import com.projetenchere.common.util.NetworkUtil;
 
 import java.net.InetSocketAddress;
-import java.security.PublicKey;
 
 public class BidderClient extends Client {
 
@@ -37,7 +34,7 @@ public class BidderClient extends Client {
         stop(toSeller);
     }
 
-    public PublicKey getManagerPubKey() {
+    public SigPack_PubKey getManagerPubKey() {
         return fetch(
                 toManager,
                 Headers.GET_PUB_KEY,
@@ -45,7 +42,7 @@ public class BidderClient extends Client {
         );
     }
 
-    public CurrentBids getCurrentBids() {
+    public SigPack_CurrentBids getCurrentBids() {
         return fetch(
                 toManager,
                 Headers.GET_CURRENT_BIDS,
@@ -53,7 +50,16 @@ public class BidderClient extends Client {
         );
     }
 
-    public SignedEncryptedOfferSet sendOfferReceiveList(EncryptedOffer offer) {
+    public SigPack_Confirm sendParticipationReceiveConfirm(SigPack_Confirm participation) {
+        return fetchWithData(
+                toSeller,
+                Headers.GET_PARTICIPATION,
+                Headers.OK_PARTICIPATION,
+                participation
+        );
+    }
+
+    public SigPack_EncOffersProduct sendOfferReceiveList(SigPack_EncOffer offer) {
         return fetchWithData(
                 toSeller,
                 Headers.SEND_OFFER,
@@ -62,20 +68,22 @@ public class BidderClient extends Client {
         );
     }
 
-    public WinStatus validateAndGetWinStatus(SignedPublicKey key) {
+    public synchronized EndPack validateAndGetResults(SigPack_Confirm key) {
         return fetchWithData(
                 toSeller,
-                Headers.GET_WIN_STATUS,
-                Headers.OK_WIN_STATUS,
+                Headers.GET_RESULTS,
+                Headers.OK_RESULTS,
                 key
         );
     }
 
-    public void stopEverything() {
-        stopSeller();
-        abort(toManager);
-        abort(toSeller);
+    public PlayerStatus sendExpressWin(SigPack_Confirm expression){
+        return fetchWithData(
+                toSeller,
+                Headers.SET_WIN_EXP,
+                Headers.OK_WIN_EXP,
+                expression
+        );
     }
-
 
 }

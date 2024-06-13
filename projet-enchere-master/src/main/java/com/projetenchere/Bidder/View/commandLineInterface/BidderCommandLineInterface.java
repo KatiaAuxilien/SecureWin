@@ -1,17 +1,14 @@
-package com.projetenchere.Bidder.View.commandLineInterface;
+package com.projetenchere.bidder.view.commandLineInterface;
 
-import com.projetenchere.Bidder.Model.Bidder;
-import com.projetenchere.Bidder.View.IBidderUserInterface;
-import com.projetenchere.common.Models.CurrentBids;
-import com.projetenchere.common.Models.Offer;
+import com.projetenchere.bidder.model.Bidder;
+import com.projetenchere.bidder.view.IBidderUserInterface;
+import com.projetenchere.common.model.CurrentBids;
+import com.projetenchere.common.model.Offer;
 
 import java.util.Scanner;
 
 public class BidderCommandLineInterface implements IBidderUserInterface {
     public static final Scanner scanner = new Scanner(System.in);
-
-    public BidderCommandLineInterface() {
-    }
 
     public void showMessage(String message) {
         System.out.println(message);
@@ -19,6 +16,15 @@ public class BidderCommandLineInterface implements IBidderUserInterface {
 
     private String readMessage() {
         return scanner.nextLine();
+    }
+
+    private static BidderCommandLineInterface instance = null;
+
+    public static BidderCommandLineInterface getInstance() {
+        if (instance == null) {
+            instance = new BidderCommandLineInterface();
+        }
+        return instance;
     }
 
     @Override
@@ -95,6 +101,16 @@ public class BidderCommandLineInterface implements IBidderUserInterface {
     @Override
     public void tellReceiptOfCurrentBids() {
         showMessage("Réception des enchères actuelles");
+    }
+
+    @Override
+    public void tellFalsifiedSignatureManager() {
+        showMessage("Signature du gestionnaire falsifiée !");
+    }
+
+    @Override
+    public void tellFalsifiedSignatureSeller() {
+        showMessage("Signature du vendeur falsifiée !");
     }
 
 

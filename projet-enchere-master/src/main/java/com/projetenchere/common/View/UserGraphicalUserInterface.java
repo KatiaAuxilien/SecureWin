@@ -1,4 +1,4 @@
-package com.projetenchere.common.View;
+package com.projetenchere.common.view;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -9,9 +9,7 @@ import javafx.stage.Stage;
 
 import java.util.UUID;
 
-public class UserGraphicalUserInterface {
-
-    private static UserGraphicalUserInterface instance = null;
+public abstract class UserGraphicalUserInterface implements IUserInterface {
     protected final String instanceId = UUID.randomUUID().toString();
     protected Stage primaryStage;
     @FXML
@@ -19,30 +17,34 @@ public class UserGraphicalUserInterface {
     @FXML
     private VBox messagesVBox = new VBox();
 
-    public UserGraphicalUserInterface() {
+    protected UserGraphicalUserInterface() {
         System.out.println("Interface instance created: " + instanceId);
-    }
-
-    public static UserGraphicalUserInterface getInstance() {
-        if (instance == null) {
-            throw new NullPointerException("Instance non initialisée");
-        }
-        return instance;
-    }
-
-    public static void setInstance(UserGraphicalUserInterface instance) {
-        UserGraphicalUserInterface.instance = instance;
     }
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    public void addLogMessage(String message) {
+    public synchronized void addLogMessage(String message) {
         Platform.runLater(() -> {
             Label messageLabel = new Label(message);
             messagesVBox.getChildren().add(messageLabel);
             scrollPane.setVvalue(1.0);
         });
+    }
+
+    @Override
+    public void tellSignatureConfigSetup() {
+        addLogMessage("Mise en place de la configuration de la signature...");
+    }
+
+    @Override
+    public void tellSignatureConfigGeneration() {
+        addLogMessage("Génération de la configuration de la signature ...");
+    }
+
+    @Override
+    public void tellSignatureConfigReady() {
+        addLogMessage("Configuration de la signature terminée.");
     }
 }

@@ -1,6 +1,6 @@
-package com.projetenchere.Bidder.Model;
+package com.projetenchere.bidder.model;
 
-import com.projetenchere.common.Models.User;
+import com.projetenchere.common.model.User;
 
 public class Bidder extends User {
 

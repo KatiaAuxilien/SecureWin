@@ -1,8 +1,9 @@
-package com.projetenchere.Manager.View.graphicalUserInterface;
+package com.projetenchere.manager.view.graphicalUserInterface;
 
-import com.projetenchere.Manager.View.IManagerUserInterface;
-import com.projetenchere.common.Models.Bid;
-import com.projetenchere.common.View.UserGraphicalUserInterface;
+import com.projetenchere.common.model.Bid;
+import com.projetenchere.common.view.UserGraphicalUserInterface;
+import com.projetenchere.manager.view.IManagerUserInterface;
+import com.projetenchere.manager.view.graphicalUserInterface.item.ManagerTable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -10,23 +11,22 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class ManagerGraphicalUserInterface extends UserGraphicalUserInterface implements IManagerUserInterface {
-
     @FXML
     public Label checkCurrentBidsVBoxTitle;
     @FXML
     public Label labelVBoxTitle;
     @FXML
-    private TableView<ItemManagerTable> auctionsTableView;
+    private TableView<ManagerTable> auctionsTableView;
     @FXML
-    private TableColumn<ItemManagerTable, String> nameColumn;
+    private TableColumn<ManagerTable, String> nameColumn;
     @FXML
-    private TableColumn<ItemManagerTable, String> descriptionColumn;
+    private TableColumn<ManagerTable, String> descriptionColumn;
     @FXML
-    private TableColumn<ItemManagerTable, String> startDateColumn;
+    private TableColumn<ManagerTable, String> startDateColumn;
     @FXML
-    private TableColumn<ItemManagerTable, String> endDateColumn;
+    private TableColumn<ManagerTable, String> endDateColumn;
     @FXML
-    private TableColumn<ItemManagerTable, String> statusColumn;
+    private TableColumn<ManagerTable, String> statusColumn;
 
     public void initialize() {
         checkCurrentBidsVBoxTitle.setVisible(false);
@@ -49,11 +49,12 @@ public class ManagerGraphicalUserInterface extends UserGraphicalUserInterface im
         });
     }
 
-
+    @Override
     public void displayHello() {
-        addLogMessage("Bienvenue Manager");
+        addLogMessage("Bienvenue manager");
     }
 
+    @Override
     public void displayNewBid(Bid bid) {
         if (!auctionsTableView.isVisible() || !auctionsTableView.isManaged()) {
             auctionsTableView.setVisible(true);
@@ -62,18 +63,37 @@ public class ManagerGraphicalUserInterface extends UserGraphicalUserInterface im
             checkCurrentBidsVBoxTitle.setManaged(true);
         }
         addLogMessage("Nouvelle enchère reçue : " + bid.getName() + " (" + bid.getId() + ") Date:" + bid.getStartDateTime().toString());
-        auctionsTableView.getItems().add(new ItemManagerTable(bid.getId(), bid.getName(), bid.getDescription(), bid.getStartDateTime().toString(), bid.getEndDateTime().toString(), "En cours..."));
+        auctionsTableView.getItems().add(new ManagerTable(bid.getId(), bid.getName(), bid.getDescription(), bid.getStartDateTime().toString(), bid.getEndDateTime().toString(), "En cours..."));
     }
 
+    @Override
     public void diplayEndBid(String idBid) {
         addLogMessage("L'enchère " + idBid + " a été résolue.");
-        for (ItemManagerTable item : auctionsTableView.getItems()) {
+        for (ManagerTable item : auctionsTableView.getItems()) {
             if (item.getId().equals(idBid)) {
                 item.statusProperty().set("Fini");
                 break;
             }
         }
 
+    }
+    @Override
+    public synchronized void displayBidderAskBids(){
+        addLogMessage("Un enchérisseur a demandé les enchères actuelles.");
+    }
+    @Override
+    public void displaySendBidderPubKey(){
+        addLogMessage("Envoi des informations de sécurité.");
+    }
+
+    @Override
+    public void tellKeysGeneration(){
+        addLogMessage("Génération des clés...");
+    }
+
+    @Override
+    public void tellKeysReady(){
+        addLogMessage("Paire de clés prêtes.");
     }
 
     @Override
@@ -96,5 +116,17 @@ public class ManagerGraphicalUserInterface extends UserGraphicalUserInterface im
         addLogMessage("Gestionnaire prêt à traiter des enchères");
     }
 
+    @Override
+    public void tellFalsifiedSignatureBidder() {
+        addLogMessage("Signature de l'enchérisseur usurpée.");
+    }
 
+    @Override
+    public void tellFalsifiedSignatureSeller() {
+        addLogMessage("Signature du vendeur usurpée.");
+    }
+
+
+    @Override
+    public void tellBidRequest(){addLogMessage("Un enchérisseur a demandé les enchères actuelles.");}
 }

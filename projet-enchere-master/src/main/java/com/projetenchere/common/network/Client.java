@@ -9,13 +9,15 @@ public class Client {
         if (socket == null) throw new RuntimeException("Trying to send data to closed socket");
     }
 
-    protected <T extends Serializable> T fetch(ClientSocketWrapper socket, Headers headerToSend, Headers headerToReceive) {
+    public <T extends Serializable> T fetch(ClientSocketWrapper socket, Headers headerToSend, Headers headerToReceive) {
         checkConnection(socket);
         DataWrapper<?> request = new DataWrapper<>(headerToSend);
         DataWrapper<T> wrapped;
         try {
+            System.out.println("Sending " + headerToSend);
             socket.getObjectOutputStream().writeObject(request);
             wrapped = (DataWrapper<T>) socket.getObjectInputStream().readObject();
+            System.out.println("Received " + wrapped.getHeader());
             if (!wrapped.checkHeader(headerToReceive))
                 throw new RuntimeException("Wrong header received: " + headerToReceive);
         } catch (IOException | ClassCastException | ClassNotFoundException e) {
@@ -24,13 +26,15 @@ public class Client {
         return wrapped.unwrap();
     }
 
-    protected <T1 extends Serializable, T2 extends Serializable> T1 fetchWithData(ClientSocketWrapper socket, Headers headerToSend, Headers headerToReceive, T2 data) {
+    public <T1 extends Serializable, T2 extends Serializable> T1 fetchWithData(ClientSocketWrapper socket, Headers headerToSend, Headers headerToReceive, T2 data) {
         checkConnection(socket);
         DataWrapper<T1> wrappedToReceive;
         DataWrapper<T2> wrappedToSend = new DataWrapper<>(data, headerToSend);
         try {
+            System.out.println("Sending " + wrappedToSend.getHeader());
             socket.getObjectOutputStream().writeObject(wrappedToSend);
             wrappedToReceive = (DataWrapper<T1>) socket.getObjectInputStream().readObject();
+            System.out.println("Received " + wrappedToReceive.getHeader());
             if (!wrappedToReceive.checkHeader(headerToReceive))
                 throw new RuntimeException("Wrong header | wanted " + headerToReceive + " received " + wrappedToReceive.getHeader());
         } catch (IOException | ClassCastException | ClassNotFoundException e) {

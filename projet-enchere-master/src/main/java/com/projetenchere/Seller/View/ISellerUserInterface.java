@@ -1,9 +1,9 @@
-package com.projetenchere.Seller.View;
+package com.projetenchere.seller.view;
 
-import com.projetenchere.common.Models.Bid;
-import com.projetenchere.common.View.I_UserInterface;
+import com.projetenchere.common.model.Bid;
+import com.projetenchere.common.view.IUserInterface;
 
-public interface ISellerUserInterface extends I_UserInterface {
+public interface ISellerUserInterface extends IUserInterface {
     void displayHello();
 
     void tellSignatureConfigSetup();
@@ -24,4 +24,24 @@ public interface ISellerUserInterface extends I_UserInterface {
 
     void tellSendBidToManager();
 
+    void tellWaitForParticipation();
+    void tellNewParticipant();
+    void tellParticipationRejected();
+    void tellEndOfParticipation();
+    void tellSendBiddersVerification();
+    void tellSendResolutionToManager();
+    void tellFalsifiedSignatureManager();
+    void tellFalsifiedSignatureBidder();
+    void tellWinnerBid(double prix);
+    void tellResultsSend();
+    void tellWaitWinnerManifestation();
+    void displayEndBid(String idBid);
+
+    void showNewOfferAlert();
+
+    void tellBidEnd();
+
+    void tellSendOffersToManager();
+
+    void displayWinnerPrice(double price);
 }

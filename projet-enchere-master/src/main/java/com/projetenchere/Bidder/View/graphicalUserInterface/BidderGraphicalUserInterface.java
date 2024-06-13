@@ -1,17 +1,20 @@
-package com.projetenchere.Bidder.View.graphicalUserInterface;
+package com.projetenchere.bidder.view.graphicalUserInterface;
 
-import com.projetenchere.Bidder.Model.Bidder;
-import com.projetenchere.Bidder.View.IBidderUserInterface;
-import com.projetenchere.common.Models.Bid;
-import com.projetenchere.common.Models.CurrentBids;
-import com.projetenchere.common.Models.Offer;
-import com.projetenchere.common.View.UserGraphicalUserInterface;
+import com.projetenchere.bidder.loader.BidderGraphicalApp;
+import com.projetenchere.bidder.model.Bidder;
+import com.projetenchere.bidder.view.IBidderUserInterface;
+import com.projetenchere.bidder.view.graphicalUserInterface.item.BidderTable;
+import com.projetenchere.common.model.Bid;
+import com.projetenchere.common.model.CurrentBids;
+import com.projetenchere.common.model.Offer;
+import com.projetenchere.common.view.UserGraphicalUserInterface;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.security.SignatureException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +33,13 @@ public class BidderGraphicalUserInterface extends UserGraphicalUserInterface imp
     @FXML
     public Button buttonCreate;
     @FXML
-    private TableView<ItemBidderTable> auctionsTableView;
+    private TableView<BidderTable> auctionsTableView;
     @FXML
-    private TableColumn<ItemBidderTable, String> nameColumn;
+    private TableColumn<BidderTable, String> nameColumn;
     @FXML
-    private TableColumn<ItemBidderTable, String> descriptionColumn;
+    private TableColumn<BidderTable, String> descriptionColumn;
     @FXML
-    private TableColumn<ItemBidderTable, String> endDateColumn;
+    private TableColumn<BidderTable, String> endDateColumn;
     @FXML
     private TextField offerAmountTextField;
     @FXML
@@ -57,7 +60,11 @@ public class BidderGraphicalUserInterface extends UserGraphicalUserInterface imp
             }
         });
         refreshButton.setOnAction(actionEvent -> {
-            BidderAppLoader.getControllerInstance().initWithManager();
+            try {
+                BidderGraphicalApp.getControllerInstance().initWithManager();
+            } catch (SignatureException e) {
+                throw new RuntimeException(e);
+            }
         });
         for (TableColumn<?, ?> column : auctionsTableView.getColumns()) {
             column.setPrefWidth(auctionsTableView.getWidth() / auctionsTableView.getColumns().size());
@@ -88,10 +95,10 @@ public class BidderGraphicalUserInterface extends UserGraphicalUserInterface imp
     public void displayBid(CurrentBids currentBids) {
         boolean ok = true;
         this.currentBids = currentBids;
-        List<ItemBidderTable> itemBidderTables = new ArrayList<>();
+        List<BidderTable> bidderTables = new ArrayList<>();
         for (Bid bid : currentBids.getCurrentBids()) {
             if (auctionsTableView.getItems() != null) {
-                for (ItemBidderTable item : auctionsTableView.getItems()) {
+                for (BidderTable item : auctionsTableView.getItems()) {
                     if (item.getId().equals(bid.getId())) {
                         ok = false;
                         break;
@@ -99,11 +106,11 @@ public class BidderGraphicalUserInterface extends UserGraphicalUserInterface imp
                 }
             }
             if (ok) {
-                itemBidderTables.add(new ItemBidderTable(bid.getId(), bid.getName(), bid.getDescription(), bid.getEndDateTime().toString()));
+                bidderTables.add(new BidderTable(bid.getId(), bid.getName(), bid.getDescription(), bid.getEndDateTime().toString()));
             }
 
         }
-        auctionsTableView.getItems().addAll(itemBidderTables);
+        auctionsTableView.getItems().addAll(bidderTables);
     }
 
     @FXML
@@ -202,6 +209,16 @@ public class BidderGraphicalUserInterface extends UserGraphicalUserInterface imp
     @Override
     public void tellReceiptOfCurrentBids() {
         addLogMessage("Réception des enchères actuelles");
+    }
+
+    @Override
+    public void tellFalsifiedSignatureManager() {
+
+    }
+
+    @Override
+    public void tellFalsifiedSignatureSeller() {
+
     }
 
 }

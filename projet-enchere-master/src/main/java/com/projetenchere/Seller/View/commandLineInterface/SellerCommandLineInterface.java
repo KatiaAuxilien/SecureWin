@@ -1,8 +1,8 @@
-package com.projetenchere.Seller.View.commandLineInterface;
+package com.projetenchere.seller.view.commandLineInterface;
 
-import com.projetenchere.Seller.View.ISellerUserInterface;
-import com.projetenchere.common.Models.AbstractUserInterface;
-import com.projetenchere.common.Models.Bid;
+import com.projetenchere.common.model.AbstractUserInterface;
+import com.projetenchere.common.model.Bid;
+import com.projetenchere.seller.view.ISellerUserInterface;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -104,6 +104,86 @@ public class SellerCommandLineInterface extends AbstractUserInterface implements
     @Override
     public void tellSendBidToManager() {
         showMessage("Envoi de l'enchère au manager...");
+    }
+
+    @Override
+    public void tellWaitForParticipation() {
+
+    }
+
+    @Override
+    public void tellNewParticipant() {
+
+    }
+
+    @Override
+    public void tellParticipationRejected() {
+
+    }
+
+    @Override
+    public void tellEndOfParticipation() {
+
+    }
+
+    @Override
+    public void tellSendBiddersVerification() {
+
+    }
+
+    @Override
+    public void tellSendResolutionToManager() {
+
+    }
+
+    @Override
+    public void tellFalsifiedSignatureManager() {
+
+    }
+
+    @Override
+    public void tellFalsifiedSignatureBidder() {
+
+    }
+
+    @Override
+    public void tellWinnerBid(double prix) {
+
+    }
+
+    @Override
+    public void tellWaitWinnerManifestation() {
+
+    }
+
+    @Override
+    public void displayEndBid(String idBid) {
+
+    }
+
+    @Override
+    public void showNewOfferAlert() {
+        showMessage("Nouvelle offre reçue !");
+    }
+
+    @Override
+    public void tellBidEnd() {
+        showMessage("Enchère finie !");
+    }
+
+    @Override
+    public void tellSendOffersToManager() {
+        showMessage("Envoie de la demande de résolution au gestionnaire.");
+    }
+
+    @Override
+    public void displayWinnerPrice(double price) {
+        showMessage("Le prix gagnant est " + price + "€");
+    }
+
+    @Override
+    public void tellResultsSend() {
+        showMessage("Résultats envoyés aux enchérisseurs.");
     }
 
     @Override
