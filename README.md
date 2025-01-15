@@ -27,24 +27,24 @@
 * LinkedIn: [@katia-auxilien](https://linkedin.com/in/katia-auxilien)
 
 👤 **Loan Tremoulet-Breton**
-* Website: TODO
-* Github: [@]()
-* LinkedIn: [@]()
+<!-- * Website: TODO -->
+* Github: [@loantb](https://github.com/LoanTB)
+<!-- * LinkedIn: [@]() -->
 
 👤 **Paul Jacquemin**
-* Website: TODO
+<!-- * Website: TODO
 * Github: [@]()
-* LinkedIn: [@]()
+* LinkedIn: [@]() -->
 
 👤 **Yûki Sala-Mochizuki**
-* Website: TODO
+<!-- * Website: TODO -->
 * Github: [@]()
-* LinkedIn: [@]()
+<!-- * LinkedIn: [@]() -->
 
 👤 **Rémi Vachalde**
-* Website: TODO
+<!-- * Website: TODO
 * Github: [@]()
-* LinkedIn: [@]()
+* LinkedIn: [@]() -->
 
 ## 🤝 Contributing
 
