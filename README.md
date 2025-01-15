@@ -17,7 +17,7 @@
 
 ### 📘 [Install](https://github.com/KatiaAuxilien/SecureWin/blob/V2/Suivi%20de%20projet%20%26%20sch%C3%A9mas%20d'architecture/SecureWin%20-%20Notice%20d_installation.pdf)
 
-### 📙 [Usage](https://github.com/KatiaAuxilien/SecureWin/blob/V2/Suivi%20de%20projet%20%26%20sch%C3%A9mas%20d'architecture/SecureWin%20-%20Notice%20d_utilisation.pdf)
+### 📙 [Usage](https://github.com/KatiaAuxilien/SecureWin/blob/V1/SecureWin%20-%20Notice%20d'utilisation.pdf)
 
 ## Authors
 
