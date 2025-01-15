@@ -56,7 +56,7 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2025 [Katia Auxilien, Loan Tremoulet-Breton, Rémi Vachalde, Paul Jacquemin, Yûki Sala-Mochizuki](https://github.com/KatiaAuxilien/SecureWin/).<br />
+Copyright © 2023 [Katia Auxilien, Loan Tremoulet-Breton, Rémi Vachalde, Paul Jacquemin, Yûki Sala-Mochizuki](https://github.com/KatiaAuxilien/SecureWin/).<br />
 This project is [MIT](https://github.com/KatiaAuxilien/SecureWin/blob/main/LICENSE) licensed.
 
 ***
